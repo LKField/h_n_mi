@@ -1,6 +1,6 @@
 # H(n)MI Class - MDEF
 
-Group Members: [Lucretia Field](https://lkfield.github.io/mdef/), Maria Vittoria Colombo, Ramon Prat Gibert 
+Group Members: [Lucretia Field](https://lkfield.github.io/mdef/){:target="_blank"}, [Maria Vittoria Colombo](https://colombomariavittorias-organizati.gitbook.io/maria-vittoria-colombo-mdef){:target="_blank"}, [Ramon Prat Gibert](https://ramon-prat-gibert.gitbook.io/ramon-prat-mdef-website/crea/final-project){:target="_blank"}
 
 
 
@@ -20,5 +20,8 @@ This folder contains the experiments from the second day of H(n)MI when we worke
 | File Name                 | Description                                                               |
 | ------------------------- | ------------------------------------------------------------------------- |
 | keystroke_experiment.js   | initial experiment with keystroke input to move shapes with keystrokes    |
+| keystroke_experiment.mov  | screen recording of first keystroke experiment                            |
 | keystroke_experiment_2.js | second experiment with keystroke input                                    |
+| keystroke_experiment_2.mov| screen recording of second keystroke experiment                           |
 | mic_experiment.js         | initial experiment with microphone input                                  |
+| mic_experiment.mov        | video of microphone experiment                                            |
