@@ -4,7 +4,7 @@ function setup() {
   createCanvas(400, 400);
   background('yellow');
 
-  describe('A magenta line on a yellow background that moves in x2 and y1 by 1 until the user presses the "m" key when it will move by 20. When the user presses "ENTER" the drawing clears and restarts.');
+  describe('A magenta circle with red fill on a yellow background that moves and grows by 1 until the user presses the "m" key when it will move by 20. When the user presses "ENTER" the drawing clears and restarts.');
   
 }
 
