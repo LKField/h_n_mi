@@ -1,6 +1,6 @@
 # H(n)MI Class - MDEF
 
-Group Members: [Lucretia Field](https://lkfield.github.io/mdef/){:target="_blank"}, [Maria Vittoria Colombo](https://colombomariavittorias-organizati.gitbook.io/maria-vittoria-colombo-mdef){:target="_blank"}, [Ramon Prat Gibert](https://ramon-prat-gibert.gitbook.io/ramon-prat-mdef-website/crea/final-project){:target="_blank"}
+Group Members: [Lucretia Field](https://lkfield.github.io/mdef/), [Maria Vittoria Colombo](https://colombomariavittorias-organizati.gitbook.io/maria-vittoria-colombo-mdef), [Ramon Prat Gibert](https://ramon-prat-gibert.gitbook.io/ramon-prat-mdef-website/crea/final-project)
 
 
 
