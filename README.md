@@ -1,6 +1,6 @@
-# H(n)MI Class - MDEF Term 2 
+# H(n)MI Class - MDEF
 
-Group Members: Lucretia Field, Maria Vittoria Colombo, Ramon Prat Gibert 
+Group Members: [Lucretia Field](https://lkfield.github.io/mdef/), Maria Vittoria Colombo, Ramon Prat Gibert 
 
 
 
