@@ -25,3 +25,14 @@ This folder contains the experiments from the second day of H(n)MI when we worke
 | keystroke_experiment_2.mov| screen recording of second keystroke experiment                           |
 | mic_experiment.js         | initial experiment with microphone input                                  |
 | mic_experiment.mov        | video of microphone experiment                                            |
+
+## 14_02_experiments Folder
+
+This folder contains the experiments from the third day of H(n)MI
+
+| File/Folder Name          | Description                                                               |
+| ------------------------- | ------------------------------------------------------------------------- |
+| pressure_day3             | Arduino code to interface Arduino with sensor and slow framerate for P5   |
+| TimeDots                  | P5 Folder with code to show dots on screen every 1 second & save data     |
+| WebSerial_to_Arduino      | P5 Folder with code to connect Arduino with P5.js                         |
+|   |                            |
