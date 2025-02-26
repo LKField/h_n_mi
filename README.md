@@ -39,3 +39,26 @@ This folder contains the experiments from the third day of H(n)MI
 | TimeDots                  | P5 Folder with code to show dots on screen every 1 second & save data     |
 | WebSerial_to_Arduino      | P5 Folder with code to connect Arduino with P5.js                         |
 | pressure.mov              | Video of pressure sensor working with P5.js                               |
+
+
+## Small Data - Dance Visualization 
+
+The idea for this project is to put pressure sensors in Lucretia's dance shoes and then to test a few different dance steps and visualize what the different dance forms look like in terms of pressure on the feet to check for patterns and see how the movement manifests. 
+
+Proposed code architecture: 
+- Read 4 pressure sensors (heel and ball of the foot in both feet)
+- Write the values to a Google Sheet using the API 
+- Read the data from the Google Sheet into P5.js and visualize the data 
+
+
+### dance_visualization Folder 
+
+| File/Folder Name          | Description                                                               |
+| ------------------------- | ------------------------------------------------------------------------- |
+| fourPressureSensors       | Arduino code to interface Arduino with 4 pressure sensors                 |
+| media                     | Folder containing photos and videos of the process                        |
+|               |                        |
+|               |                        |
+
+## References 
+Some of the code can be found in the repository by Citlali Hernández and Lina Bautista for the course: [https://github.com/TURBULENTE/H-n-MI](https://github.com/TURBULENTE/H-n-MI){:target="_blank"}
