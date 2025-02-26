@@ -2,7 +2,7 @@
 
 Group Members: [Lucretia Field](https://lkfield.github.io/mdef/), [Maria Vittoria Colombo](https://colombomariavittorias-organizati.gitbook.io/maria-vittoria-colombo-mdef), [Ramon Prat Gibert](https://ramon-prat-gibert.gitbook.io/ramon-prat-mdef-website/crea/final-project)
 
-
+This repository collects the work of our group for the "Small Data" project during the H(n)MI class. 
 
 ## 11_02_experiments Folder 
 
@@ -19,12 +19,15 @@ This folder contains the experiments from the second day of H(n)MI when we worke
 
 | File Name                 | Description                                                               |
 | ------------------------- | ------------------------------------------------------------------------- |
-| keystroke_experiment.js   | initial experiment with keystroke input to move shapes with keystrokes    |
-| keystroke_experiment.mov  | screen recording of first keystroke experiment                            |
-| keystroke_experiment_2.js | second experiment with keystroke input                                    |
-| keystroke_experiment_2.mov| screen recording of second keystroke experiment                           |
-| mic_experiment.js         | initial experiment with microphone input                                  |
-| mic_experiment.mov        | video of microphone experiment                                            |
+| keystroke_experiment.js   | Initial experiment with keystroke input to move shapes with keystrokes    |
+| keystroke_experiment.mov  | Screen recording of first keystroke experiment                            |
+| keystroke_experiment_2.js | Second experiment with keystroke input                                    |
+| keystroke_experiment_2.mov| Screen recording of second keystroke experiment                           |
+| mic_experiment.js         | Initial experiment with microphone input                                  |
+| mic_experiment.mov        | Video of microphone experiment                                            |
+| p5_test.png               | Photo of initial P5.js test with drawing                                  |
+| processing.png            | Photo of the initial Processing connection 'hello world' test             |
+
 
 ## 14_02_experiments Folder
 
@@ -35,4 +38,4 @@ This folder contains the experiments from the third day of H(n)MI
 | pressure_day3             | Arduino code to interface Arduino with sensor and slow framerate for P5   |
 | TimeDots                  | P5 Folder with code to show dots on screen every 1 second & save data     |
 | WebSerial_to_Arduino      | P5 Folder with code to connect Arduino with P5.js                         |
-|   |                            |
+| pressure.mov              | Video of pressure sensor working with P5.js                               |
