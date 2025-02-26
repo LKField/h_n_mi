@@ -9,8 +9,8 @@ const char* WiFiConfig::WIFI_PASSWORD = SECRET_PASS;
 // Google Sheets Configuration definitions
 const char* GoogleSheetConfig::PROJECT_ID = SECRET_ID;
 const char* GoogleSheetConfig::CLIENT_EMAIL = SECRET_EMAIL;
-const char* GoogleSheetConfig::PRIVATE_KEY[] = SECRET_API[];
-const char* GoogleSheetConfig::SHEET_ID[] = SECRET_SHEET_ID[];
+const char* GoogleSheetConfig::PRIVATE_KEY = SECRET_API;
+const char* GoogleSheetConfig::SHEET_ID = SECRET_SHEET_ID;
 
 
 // Hardware Configuration definitions TODO: Fix This for Hardware

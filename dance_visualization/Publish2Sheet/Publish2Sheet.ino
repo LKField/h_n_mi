@@ -1,56 +1,104 @@
-/*
-  Rui Santos
-  Complete project details at https://RandomNerdTutorials.com/esp32-datalogging-google-sheets/
-  
-  Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files.
-  The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-  Adapted from the examples of the Library Google Sheet Client Library for Arduino devices: https://github.com/mobizt/ESP-Google-Sheet-Client
-*/
+
+/**
+ * Created by K. Suwatchai (Mobizt)
+ *
+ * Email: suwatchai@outlook.com
+ *
+ * Github: https://github.com/mobizt
+ *
+ * Copyright (c) 2023 mobizt
+ *
+ * Edited by Lucretia Field 
+ */
+
+// This example shows how to append new values to spreadsheet.
 
 #include <Arduino.h>
-#include <WiFi.h>
-#include "time.h"
-#include <ESP_Google_Sheet_Client.h>
-//#include "arduino_secrets.h"
+#include "arduino_secrets.h"
 #include "Config.h"
+#if defined(ESP32) || defined(ARDUINO_RASPBERRY_PI_PICO_W)
+#include <WiFi.h>
+#elif defined(ESP8266)
+#include <ESP8266WiFi.h>
+#elif __has_include(<WiFiNINA.h>)
+#include <WiFiNINA.h>
+#elif __has_include(<WiFi101.h>)
+#include <WiFi101.h>
+#elif __has_include(<WiFiS3.h>)
+#include <WiFiS3.h>
+#endif
+
+#include <ESP_Google_Sheet_Client.h>
 
 // For SD/SD_MMC mounting helper
 #include <GS_SDHelper.h>
 
-//#define WIFI_SSID SECRET_SSID
-//#define WIFI_PASSWORD SECRET_PASS
+unsigned long ms = 0;
 
-// Google Project ID
-//#define PROJECT_ID SECRET_ID
+#if defined(ARDUINO_RASPBERRY_PI_PICO_W)
+WiFiMulti multi;
+#endif
 
-// Service Account's client email
-//#define CLIENT_EMAIL SECRET_EMAIL
-
-//const char* WIFI_SSID = SECRET_SSID;
-//const char* WIFI_PASSWORD = SECRET_PASS;
-
-//const char PROJECT_ID = SECRET_ID;
-
-//const char CLIENT_EMAIL = SECRET_EMAIL;
-
-// Service Account's private key
-//const char PRIVATE_KEY[] PROGMEM = SECRET_API;
-
-// The ID of the spreadsheet where you'll publish the data
-//const char spreadsheetId[] = SECRET_SHEET_ID;
-
-// Timer variables
-unsigned long lastTime = 0;  
-unsigned long timerDelay = 30000;
-
-// Token Callback function
 void tokenStatusCallback(TokenInfo info);
 
-// NTP server to request epoch time
-const char* ntpServer = "pool.ntp.org";
+void setup()
+{
 
-// Variable to save current epoch time
-unsigned long epochTime; 
+    Serial.begin(115200);
+    Serial.println();
+    Serial.println();
+
+    GSheet.printf("ESP Google Sheet Client v%s\n\n", ESP_GOOGLE_SHEET_CLIENT_VERSION);
+
+#if defined(ESP32) || defined(ESP8266)
+    WiFi.setAutoReconnect(true);
+#endif
+
+#if defined(ARDUINO_RASPBERRY_PI_PICO_W)
+    multi.addAP(WiFiConfig::WIFI_SSID, WiFiConfig::WIFI_PASSWORD);
+    multi.run();
+#else
+    WiFi.begin(WiFiConfig::WIFI_SSID, WiFiConfig::WIFI_PASSWORD);
+#endif
+
+    Serial.print("Connecting to Wi-Fi");
+    unsigned long ms = millis();
+    while (WiFi.status() != WL_CONNECTED)
+    {
+        Serial.print(".");
+        delay(300);
+#if defined(ARDUINO_RASPBERRY_PI_PICO_W)
+        if (millis() - ms > 10000)
+            break;
+#endif
+    }
+    Serial.println();
+    Serial.print("Connected with IP: ");
+    Serial.println(WiFi.localIP());
+    Serial.println();
+
+    // In case SD/SD_MMC storage file access, mount the SD/SD_MMC card.
+    // SD_Card_Mounting(); // See src/GS_SDHelper.h
+
+    // Set the callback for Google API access token generation status (for debug only)
+    GSheet.setTokenCallback(tokenStatusCallback);
+
+    // The WiFi credentials are required for Pico W
+    // due to it does not have reconnect feature.
+#if defined(ARDUINO_RASPBERRY_PI_PICO_W)
+    GSheet.clearAP();
+    GSheet.addAP(WiFiConfig::WIFI_SSID, WiFiConfig::WIFI_PASSWORD);
+#endif
+
+    // Set the seconds to refresh the auth token before expire (60 to 3540, default is 300 seconds)
+    GSheet.setPrerefreshSeconds(10 * 60);
+
+    // Begin the access token generation for Google API authentication
+    GSheet.begin(GoogleSheetConfig::CLIENT_EMAIL, GoogleSheetConfig::PROJECT_ID, GoogleSheetConfig::PRIVATE_KEY);
+
+    // Or begin with the Service Account JSON file
+    // GSheet.begin("path/to/serviceaccount/json/file", esp_google_sheet_file_storage_type_flash /* or esp_google_sheet_file_storage_type_sd */);
+}
 
 // Function that gets current epoch time
 unsigned long getTime() {
@@ -65,144 +113,67 @@ unsigned long getTime() {
   return now;
 }
 
-void setup(){
-
-    Serial.begin(115200);
-    delay(10);
-    Serial.println();
-    Serial.println();
-    Serial.println("--------------------------------------------------------------------");
-
-    //Configure time
-    configTime(0, 0, ntpServer);
-
-    GSheet.printf("ESP Google Sheet Client v%s\n\n", ESP_GOOGLE_SHEET_CLIENT_VERSION);
-
-    // // Connect to Wi-Fi
-    // WiFi.setAutoReconnect(true);
-    // WiFi.begin(WiFiConfig::WIFI_SSID, WiFiConfig::WIFI_PASSWORD);
-  
-    // Serial.print("Connecting to Wi-Fi");
-    // while (WiFi.status() != WL_CONNECTED) {
-    //   Serial.print(".");
-    //   delay(1000);
-    // }
-    // Serial.println();
-    // Serial.print("Connected with IP: ");
-    // Serial.println(WiFi.localIP());
-    // Serial.println();
-    
-  // We start by connecting to a WiFi network
-  // To debug, please enable Core Debug Level to Verbose
-
-  Serial.println();
-  Serial.print("[WiFi] Connecting to ");
-  Serial.println(WiFiConfig::WIFI_SSID);
-
-  WiFi.begin(WiFiConfig::WIFI_SSID, WiFiConfig::WIFI_PASSWORD);
-  // Auto reconnect is set true as default
-  // To set auto connect off, use the following function
-  //    WiFi.setAutoReconnect(false);
-
-  // Will try for about 10 seconds (20x 500ms)
-  int tryDelay = 500;
-  int numberOfTries = 20;
-
-  // Wait for the WiFi event
-  while (true) {
-
-    switch (WiFi.status()) {
-      case WL_NO_SSID_AVAIL: Serial.println("[WiFi] SSID not found"); break;
-      case WL_CONNECT_FAILED:
-        Serial.print("[WiFi] Failed - WiFi not connected! Reason: ");
-        return;
-        break;
-      case WL_CONNECTION_LOST: Serial.println("[WiFi] Connection was lost"); break;
-      case WL_SCAN_COMPLETED:  Serial.println("[WiFi] Scan is completed"); break;
-      case WL_DISCONNECTED:    Serial.println("[WiFi] WiFi is disconnected"); break;
-      case WL_CONNECTED:
-        Serial.println("[WiFi] WiFi is connected!");
-        Serial.print("[WiFi] IP address: ");
-        Serial.println(WiFi.localIP());
-        return;
-        break;
-      default:
-        Serial.print("[WiFi] WiFi Status: ");
-        Serial.println(WiFi.status());
-        break;
-    }
-    delay(tryDelay);
-
-    if (numberOfTries <= 0) {
-      Serial.print("[WiFi] Failed to connect to WiFi!");
-      // Use disconnect function to force stop trying to connect
-      WiFi.disconnect();
-      return;
-    } else {
-      numberOfTries--;
-    }
-  }
-    // Set the callback for Google API access token generation status (for debug only)
-    GSheet.setTokenCallback(tokenStatusCallback);
-
-    // Set the seconds to refresh the auth token before expire (60 to 3540, default is 300 seconds)
-    GSheet.setPrerefreshSeconds(10 * 60);
-
-    // Begin the access token generation for Google API authentication
-    GSheet.begin(GoogleSheetConfig::CLIENT_EMAIL, GoogleSheetConfig::PROJECT_ID, GoogleSheetConfig::PRIVATE_KEY[]);
-}
-
-void loop(){
-    Serial.println(GoogleSheetConfig::CLIENT_EMAIL);
-    Serial.println(GoogleSheetConfig::PROJECT_ID);
-    Serial.println(GoogleSheetConfig::PRIVATE_KEY[]); 
-
+void loop()
+{
     // Call ready() repeatedly in loop for authentication checking and processing
     bool ready = GSheet.ready();
-    Serial.print("GSheet.ready bool: ");
-    Serial.println(ready);
 
-    //Delay to actually be able to read the serial monitor 
-    delay(10000);
+    // GSheet.setSystemTime(getTime());
+    // Serial.println(getTime());
 
-    if (ready && millis() - lastTime > timerDelay){
-        lastTime = millis();
+    if (ready && millis() - ms > 5000)
+    {
+        ms = millis();
+
+        // For basic FirebaseJson usage example, see examples/FirebaseJson/Create_Edit_Parse/Create_Edit_Parse.ino
+
+        // If you assign the spreadsheet id from your own spreadsheet,
+        // you need to set share access to the Service Account's CLIENT_EMAIL
 
         FirebaseJson response;
+        // Instead of using FirebaseJson for response, you can use String for response to the functions
+        // especially in low memory device that deserializing large JSON response may be failed as in ESP8266
+
+
 
         Serial.println("\nAppend spreadsheet values...");
         Serial.println("----------------------------");
 
         FirebaseJson valueRange;
 
-        // Get timestamp
-        epochTime = getTime();
 
         valueRange.add("majorDimension", "COLUMNS");
-        valueRange.set("values/[0]/[0]", epochTime);
-
+        valueRange.set("values/[0]/[0]", 100);
+        valueRange.set("values/[1]/[0]", getTime());
+        valueRange.set("values/[0]/[1]", 200);
+        valueRange.set("values/[1]/[1]", getTime());
+        valueRange.set("values/[0]/[2]", 300);
+        valueRange.set("values/[1]/[2]", getTime());
 
         // For Google Sheet API ref doc, go to https://developers.google.com/sheets/api/reference/rest/v4/spreadsheets.values/append
-        // Append values to the spreadsheet
-        bool success = GSheet.values.append(&response /* returned response */, GoogleSheetConfig::SHEET_ID[] /* spreadsheet Id to append */, "Sheet1!A1" /* range to append */, &valueRange /* data range to append */);
-        if (success){
+
+        bool success = GSheet.values.append(&response /* returned response */, GoogleSheetConfig::SHEET_ID /* spreadsheet Id to append */, "Sheet1!A1" /* range to append */, &valueRange /* data range to append */);
+        if (success) {
             response.toString(Serial, true);
-            valueRange.clear();
+            Serial.println("Success: I am here!");
         }
-        else{
-            Serial.println(GSheet.errorReason());
+        else {       // Removed because confusing messages 
+            delay(10);
+            //Serial.println(GSheet.errorReason()); 
         }
-        Serial.println();
-        Serial.println(ESP.getFreeHeap());
-    }
+        //Serial.println();
+  }
 }
 
-void tokenStatusCallback(TokenInfo info){
-    if (info.status == token_status_error){
+void tokenStatusCallback(TokenInfo info)
+{
+    if (info.status == token_status_error)
+    {
         GSheet.printf("Token info: type = %s, status = %s\n", GSheet.getTokenType(info).c_str(), GSheet.getTokenStatus(info).c_str());
         GSheet.printf("Token error: %s\n", GSheet.getTokenError(info).c_str());
     }
-    else{
+    else
+    {
         GSheet.printf("Token info: type = %s, status = %s\n", GSheet.getTokenType(info).c_str(), GSheet.getTokenStatus(info).c_str());
     }
 }

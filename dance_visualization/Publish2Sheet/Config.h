@@ -12,8 +12,8 @@ struct WiFiConfig {
 struct GoogleSheetConfig {
     static const char* PROJECT_ID;
     static const char* CLIENT_EMAIL;
-    static const char* PRIVATE_KEY[];
-    static const char* SHEET_ID[];
+    static const char* PRIVATE_KEY;
+    static const char* SHEET_ID;
 };
 
 // Hardware Configuration TODO: Fix this 
