@@ -57,8 +57,8 @@ Proposed code architecture:
 | ------------------------- | ------------------------------------------------------------------------- |
 | fourPressureSensors       | Arduino code to interface Arduino with 4 pressure sensors                 |
 | media                     | Folder containing photos and videos of the process                        |
-|               |                        |
+| Publish2Sheet             | Arduino code to publish generic data to a Google Sheet using the API      |
 |               |                        |
 
 ## References 
-Some of the code can be found in the repository by Citlali Hernández and Lina Bautista for the course: [https://github.com/TURBULENTE/H-n-MI](https://github.com/TURBULENTE/H-n-MI){:target="_blank"}
+Some of the code can be found in the repository by Citlali Hernández and Lina Bautista for the course: [https://github.com/TURBULENTE/H-n-MI](https://github.com/TURBULENTE/H-n-MI)
