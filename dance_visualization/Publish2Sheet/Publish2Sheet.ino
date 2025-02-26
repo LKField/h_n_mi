@@ -11,24 +11,33 @@
 #include <WiFi.h>
 #include "time.h"
 #include <ESP_Google_Sheet_Client.h>
+//#include "arduino_secrets.h"
+#include "Config.h"
 
 // For SD/SD_MMC mounting helper
 #include <GS_SDHelper.h>
 
-#define WIFI_SSID SECRET_SSID
-#define WIFI_PASSWORD SECRET_PASS
+//#define WIFI_SSID SECRET_SSID
+//#define WIFI_PASSWORD SECRET_PASS
 
 // Google Project ID
-#define PROJECT_ID SECRET_ID
+//#define PROJECT_ID SECRET_ID
 
 // Service Account's client email
-#define CLIENT_EMAIL SECRET_EMAIL
+//#define CLIENT_EMAIL SECRET_EMAIL
+
+//const char* WIFI_SSID = SECRET_SSID;
+//const char* WIFI_PASSWORD = SECRET_PASS;
+
+//const char PROJECT_ID = SECRET_ID;
+
+//const char CLIENT_EMAIL = SECRET_EMAIL;
 
 // Service Account's private key
-const char PRIVATE_KEY[] PROGMEM = SECRET_API;
+//const char PRIVATE_KEY[] PROGMEM = SECRET_API;
 
 // The ID of the spreadsheet where you'll publish the data
-const char spreadsheetId[] = SECRET_SHEET_ID;
+//const char spreadsheetId[] = SECRET_SHEET_ID;
 
 // Timer variables
 unsigned long lastTime = 0;  
@@ -62,6 +71,7 @@ void setup(){
     delay(10);
     Serial.println();
     Serial.println();
+    Serial.println("--------------------------------------------------------------------");
 
     //Configure time
     configTime(0, 0, ntpServer);
@@ -70,7 +80,7 @@ void setup(){
 
     // // Connect to Wi-Fi
     // WiFi.setAutoReconnect(true);
-    // WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
+    // WiFi.begin(WiFiConfig::WIFI_SSID, WiFiConfig::WIFI_PASSWORD);
   
     // Serial.print("Connecting to Wi-Fi");
     // while (WiFi.status() != WL_CONNECTED) {
@@ -87,9 +97,9 @@ void setup(){
 
   Serial.println();
   Serial.print("[WiFi] Connecting to ");
-  Serial.println(WIFI_SSID);
+  Serial.println(WiFiConfig::WIFI_SSID);
 
-  WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
+  WiFi.begin(WiFiConfig::WIFI_SSID, WiFiConfig::WIFI_PASSWORD);
   // Auto reconnect is set true as default
   // To set auto connect off, use the following function
   //    WiFi.setAutoReconnect(false);
@@ -132,8 +142,6 @@ void setup(){
       numberOfTries--;
     }
   }
-
-
     // Set the callback for Google API access token generation status (for debug only)
     GSheet.setTokenCallback(tokenStatusCallback);
 
@@ -141,14 +149,21 @@ void setup(){
     GSheet.setPrerefreshSeconds(10 * 60);
 
     // Begin the access token generation for Google API authentication
-    GSheet.begin(CLIENT_EMAIL, PROJECT_ID, PRIVATE_KEY);
+    GSheet.begin(GoogleSheetConfig::CLIENT_EMAIL, GoogleSheetConfig::PROJECT_ID, GoogleSheetConfig::PRIVATE_KEY[]);
 }
 
 void loop(){
+    Serial.println(GoogleSheetConfig::CLIENT_EMAIL);
+    Serial.println(GoogleSheetConfig::PROJECT_ID);
+    Serial.println(GoogleSheetConfig::PRIVATE_KEY[]); 
+
     // Call ready() repeatedly in loop for authentication checking and processing
     bool ready = GSheet.ready();
     Serial.print("GSheet.ready bool: ");
     Serial.println(ready);
+
+    //Delay to actually be able to read the serial monitor 
+    delay(10000);
 
     if (ready && millis() - lastTime > timerDelay){
         lastTime = millis();
@@ -169,7 +184,7 @@ void loop(){
 
         // For Google Sheet API ref doc, go to https://developers.google.com/sheets/api/reference/rest/v4/spreadsheets.values/append
         // Append values to the spreadsheet
-        bool success = GSheet.values.append(&response /* returned response */, spreadsheetId /* spreadsheet Id to append */, "Sheet1!A1" /* range to append */, &valueRange /* data range to append */);
+        bool success = GSheet.values.append(&response /* returned response */, GoogleSheetConfig::SHEET_ID[] /* spreadsheet Id to append */, "Sheet1!A1" /* range to append */, &valueRange /* data range to append */);
         if (success){
             response.toString(Serial, true);
             valueRange.clear();
