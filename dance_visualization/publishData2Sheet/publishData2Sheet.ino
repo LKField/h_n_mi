@@ -63,9 +63,10 @@ int del_15fps = 1000/15;
 
 void setup()
 {
-    Serial.begin(115200);
-    Serial.println();
-    Serial.println();
+  //  Serial.begin(115200);
+  //  Serial.println();
+
+  //  Serial.println();
 
     GSheet.printf("ESP Google Sheet Client v%s\n\n", ESP_GOOGLE_SHEET_CLIENT_VERSION);
 
@@ -80,21 +81,22 @@ void setup()
     WiFi.begin(WiFiConfig::WIFI_SSID, WiFiConfig::WIFI_PASSWORD);
 #endif
 
-    Serial.print("Connecting to Wi-Fi");
+  //  Serial.print("Connecting to Wi-Fi");
     unsigned long ms = millis();
     while (WiFi.status() != WL_CONNECTED)
     {
-        Serial.print(".");
-        delay(300);
+      //  Serial.print(".");
+      //  delay(300);
+        delay(10);
 #if defined(ARDUINO_RASPBERRY_PI_PICO_W)
         if (millis() - ms > 10000)
             break;
 #endif
     }
-    Serial.println();
-    Serial.print("Connected with IP: ");
-    Serial.println(WiFi.localIP());
-    Serial.println();
+  //  Serial.println();
+  //  Serial.print("Connected with IP: ");
+  //  Serial.println(WiFi.localIP());
+  //  Serial.println();
 
     // In case SD/SD_MMC storage file access, mount the SD/SD_MMC card.
     // SD_Card_Mounting(); // See src/GS_SDHelper.h
@@ -131,11 +133,11 @@ unsigned long getTime() {
   time_t now;
   struct tm timeinfo;
   if (!getLocalTime(&timeinfo)) {
-    Serial.println("Failed to obtain time");
+  //  Serial.println("Failed to obtain time");
     return(0);
   }
   time(&now);
-  Serial.println(now);
+  //Serial.println(now);
   return now;
 }
 
@@ -162,8 +164,8 @@ void loop()
 
 
 
-        Serial.println("\nAppend spreadsheet values...");
-        Serial.println("----------------------------");
+      //  Serial.println("\nAppend spreadsheet values...");
+      //  Serial.println("----------------------------");
 
         FirebaseJson valueRange;
 
@@ -179,14 +181,15 @@ void loop()
         // For Google Sheet API ref doc, go to https://developers.google.com/sheets/api/reference/rest/v4/spreadsheets.values/append
 
         bool success = GSheet.values.append(&response /* returned response */, GoogleSheetConfig::SHEET_ID /* spreadsheet Id to append */, "Sheet1!A2" /* range to append */, &valueRange /* data range to append */);
-        if (success) {
-            response.toString(Serial, true);
-            Serial.println("Success: I am here!");
-        }
-        else {       // Removed because confusing messages 
-            delay(10);
-            //Serial.println(GSheet.errorReason()); 
-        }
+        // if (success) {
+        //   delay(10);
+        // //    response.toString(Serial, true);
+        // //    Serial.println("Success: I am here!");
+        // }
+        // else {       // Removed because confusing messages 
+        //     delay(10);
+        //     //Serial.println(GSheet.errorReason()); 
+        // }
         //Serial.println();
   }
 }
