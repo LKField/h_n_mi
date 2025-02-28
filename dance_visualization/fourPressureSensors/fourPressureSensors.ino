@@ -42,9 +42,13 @@ void loop() {
   RsensorValue_heel=analogRead(RsensorPin_heel);
 
   data[0] = LsensorValue_ball;
+//  Serial.println(data[0]);
   data[1] = LsensorValue_heel;
+//  Serial.println(data[1]);
   data[2] = RsensorValue_ball;
+//  Serial.println(data[2]);
   data[3] = RsensorValue_heel;
+//  Serial.println(data[3]);
 
   Serial.println(data[0]);
   
