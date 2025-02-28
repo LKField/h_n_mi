@@ -150,9 +150,9 @@ Check out the videos of the dance styles and the resulting patterns that were cr
 
 | Name of Step Type | Video of dance | Pattern Created |
 |-------------------|----------------|-----------------|
-| Rapper Stepping   |                | <img src="dance_visualization/media/rapper_step.png" width=45%>      |
-| Strathspey Setting|                | <img src="dance_visualization/media/strathspey.png" width=45%>       |
-| Pas de Basque     |                | <img src="dance_visualization/media/pasdebasque.png" width=45%>      |
+| Rapper Stepping   | [Rapper stepping video](dance_visualization/media/rapper_step.mov) | ![Rapper step pattern](dance_visualization/media/rapper_step.png)            |
+| Strathspey Setting| [Stathspey setting video](dance_visualization/media/strathspey.mov)| ![Strathspey setting pattern](dance_visualization/media/strathspey.png)             |
+| Pas de Basque     | [Pas de Basque video](dance_visualization/media/pasdebasque.mov)   | ![Pas de basque setting pattern](dance_visualization/media/pasdebasque.png)            |
 
 |                   | Walking step pattern |
 |-------------------|----------------------|
