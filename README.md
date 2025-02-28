@@ -66,16 +66,16 @@ The final files that we used are fourPressureSensors.ino and basicPressureVis.pd
 
 The sensors for the shoes were very similar to the sensor we made in class on the first day with Citlali. This included using copper tape as the conductive layers on the top and bottom of the insoles, adding a piezo resistive layer and creating connectors with the nylon conductive tape. For this we used two layers of piezo resistive material in an attempt to reduce the point at which the sensor saturated. While it is unclear if this helped at all, what did help was modifying the circuit. 
 
-<div class="grid" markdown>
-![Making the Sensor Copper](dance_visualization/media/makeSensor_01.jpeg)
-![Making the Sensor with Piezo Resistive Material](dance_visualization/media/makeSensor_03.jpeg)
-</div>
+| Copper tape for sensor conductors | Adding the Piezo Resistive Material |
+|-----------------------------------|-------------------------------------|
+|![Making the Sensor Copper](dance_visualization/media/makeSensor_01.jpeg)| ![Making the Sensor with Piezo Resistive Material](dance_visualization/media/makeSensor_03.jpeg)|
+
 
 ### The circuit 
 
-By changing the resistor from 1kOhms to 100Ohms, the saturation point of the analog read pins was significantly reduced. Instead of relatively light pressure saturating the sensor, full body weight had to be placed on the sensor before it saturated at 4095. 
-
-![The modified circuit](dance_visualization/media/circuit.jpg)
+|                                   | New Circuit Diagram                 |
+|-----------------------------------|-------------------------------------|
+| By changing the resistor from 1kOhms to 100Ohms, the saturation point of the analog read pins was significantly reduced. Instead of relatively light pressure saturating the sensor, full body weight had to be placed on the sensor before it saturated at 4095. | ![The modified circuit](dance_visualization/media/circuit.jpg) |
 
 ### The protoboard 
 
@@ -138,10 +138,9 @@ The Processing code can be found in the [basicPressureVis](dance_visualization/b
 
 We then started playing around with different colors, different visual representations, and different speeds. Because the window could only be a certain size, we had to reduce the speed at which the visualization expanded. We didn't want to send less data as this would reduce the resolution of the pressure we could measure. Instead we reduced the distance the visualization expanded every time. 
 
-<div class="grid" markdown>
-![First visualization method](dance_visualization/media/rapper_step.png)
-![Later visualization method](dance_visualization/media/rapper_step_02.png)
-</div>
+| 4 sensor visualization - first test | 4 sensor visualization - later test |
+|-------------------------------------|-------------------------------------|
+| ![First visualization method](dance_visualization/media/rapper_step.png) | ![Later visualization method](dance_visualization/media/rapper_step_02.png) |
 
 ### Presentation 
 
@@ -155,11 +154,9 @@ Check out the videos of the dance styles and the resulting patterns that were cr
 | Strathspey Setting|                | ![Strathspey setting pattern](dance_visualization/media/strathspey.png)     |
 | Pas de Basque     |                | ![Pas de basque setting pattern](dance_visualization/media/pasdebasque.png) |
 
-<div class="grid" markdown>
-In most of these types of dance, the heels are not supposed to touch, therefore it appears in many of these patterns that the heel sensors were not working despite them functioning just fine as can be seen in the pattern made from walking normally. 
-
-![Walking step pattern](dance_visualization/media/walking.png)
-</div>
+|                   | Walking step pattern |
+|-------------------|----------------------|
+| In most of these types of dance, the heels are not supposed to touch, therefore it appears in many of these patterns that the heel sensors were not working despite them functioning just fine as can be seen in the pattern made from walking normally. | ![Walking step pattern](dance_visualization/media/walking.png) |
 
 ### Next steps 
 
