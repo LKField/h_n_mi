@@ -16,9 +16,11 @@ int[] colorR;
 int[] colorG;
 int[] colorB;
 
+
 void setup() {
-  size(600, 600);
+  size(900, 900);
   rectSize = width / rows;
+  
 
   println(Serial.list());
   String portName = Serial.list()[2];
@@ -31,18 +33,19 @@ void setup() {
 }
 
 void draw() {
-  fill(0);
+  fill(100, 100, 100);
   textSize(16);
+  
 
   if (sz1 < rectSize) {
     for (int i = 0; i < maxNumberOfSensors; i++) {
       sz1 += 0.1;
-      text("Left - Ball of Foot", 15, 295);
+      text("Left - Ball of Foot", 15, 285);
       stroke(sensorValue[0], 20, 20, 100);
       noFill();
       rect(width/2, height/2, -sz1, -sz1);
-      rect(rectSize * (i % rows), rectY, rectSize, rectSize);
-      if ((i + 1) % rows == 0) rectY += rectSize;
+//      rect(rectSize * (i % rows), rectY, rectSize, rectSize);
+//      if ((i + 1) % rows == 0) rectY += rectSize;
     }
   }
   rectY = 0;
@@ -50,12 +53,12 @@ void draw() {
   if (sz2 < rectSize) {
     for (int i = 0; i < maxNumberOfSensors; i++) {
       sz2 += 0.1;
-      text("Right - Ball of Foot", 315, 295);
+      text("Right - Ball of Foot", 315, 285);
       stroke(sensorValue[2]/2, 20, sensorValue[2], 100);
       noFill();
       rect(width/2, height/2, sz2, -sz2);
-      rect(width/2 + rectSize * (i % rows), rectY, rectSize, rectSize);
-      if ((i + 1) % rows == 0) rectY += rectSize;
+//      rect(width/2 + rectSize * (i % rows), rectY, rectSize, rectSize);
+//      if ((i + 1) % rows == 0) rectY += rectSize;
     }
   }
   rectY = 0;
@@ -63,13 +66,13 @@ void draw() {
   if (sz3 < rectSize) {
     for (int i = 0; i < maxNumberOfSensors; i++) {
       sz3 += 0.1;
-      text("Left - Heel", 15, 595);
+      text("Left - Heel", 15, 585);
 
       stroke(sensorValue[1], sensorValue[1]/2, 20, 100);
       noFill();
       rect(width/2, height/2, -sz3, sz3);
-      rect(rectSize * (i % rows), height/2 + rectY, rectSize, rectSize);
-      if ((i + 1) % rows == 0) rectY += rectSize;
+//      rect(rectSize * (i % rows), height/2 + rectY, rectSize, rectSize);
+//      if ((i + 1) % rows == 0) rectY += rectSize;
     }
   }
   rectY = 0;
@@ -77,12 +80,12 @@ void draw() {
   if (sz4 < rectSize) {
     for (int i = 0; i < maxNumberOfSensors; i++) {
       sz4 += 0.1;
-      text("Right - Heel", 315, 595);
+      text("Right - Heel", 315, 585);
       stroke(20, sensorValue[3]/2, sensorValue[3], 100);
       noFill();
       rect(width/2, height/2, sz4, sz4);
-      rect(width/2 + rectSize * (i % rows), height/2 + rectY, rectSize, rectSize);
-      if ((i + 1) % rows == 0) rectY += rectSize;
+//      rect(width/2 + rectSize * (i % rows), height/2 + rectY, rectSize, rectSize);
+//      if ((i + 1) % rows == 0) rectY += rectSize;
     }
   }
   rectY = 0;

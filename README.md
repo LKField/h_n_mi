@@ -59,6 +59,7 @@ Proposed code architecture:
 | media                     | Folder containing photos and videos of the process                        |
 | Publish2Sheet             | Arduino code to publish generic data to a Google Sheet using the API      |
 | publishData2Sheet         | Arduino code to publish pressure sensor data to Google Sheet              |
+| basicPressureVis          | Processing code to visualize the sensor values                            |
 
 ## References 
-Some of the code can be found in the repository by Citlali Hernández and Lina Bautista for the course: [https://github.com/TURBULENTE/H-n-MI](https://github.com/TURBULENTE/H-n-MI)
+Some of the code can be found in the repository by Citlali Hernández and Lina Bautista for the course: [https://github.com/TURBULENTE/H-n-MI](https://github.com/TURBULENTE/H-n-MI) and some code from the Fabacademy course respositiory as well: [https://github.com/TURBULENTE/Fabricademy/tree/main](https://github.com/TURBULENTE/Fabricademy/tree/main). 
