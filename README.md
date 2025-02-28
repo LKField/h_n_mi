@@ -59,7 +59,62 @@ Proposed code architecture:
 | media                     | Folder containing photos and videos of the process                        |
 | Publish2Sheet             | Arduino code to publish generic data to a Google Sheet using the API      |
 | publishData2Sheet         | Arduino code to publish pressure sensor data to Google Sheet              |
-| basicPressureVis          | Processing code to visualize the sensor values                            |
+| OscTest_Send              | Arduino code to test sending OSC messages                                 |
+| OscTest_Receive           | Processing code to test receiving OSC messages                            |
+| circlePressure            | P5.js code to visualize sensor value - just one sensor                    |
+| basicPressureVis          | Processing code to visualize all four sensor values                       |
+
+The final files that we used are fourPressureSensors.ino and basicPressureVis.pde to read the 4 sensors to the Serial port and then visualize them using Processing. 
+
+## Our Process 
+
+### The sensors 
+
+The sensors for the shoes were very similar to the sensor we made in class on the first day with Citlali. This included using copper tape as the conductive layers on the top and bottom of the insoles, adding a piezo resistive layer and creating connectors with the nylon conductive tape. For this we used two layers of piezo resistive material in an attempt to reduce the point at which the sensor saturated. While it is unclear if this helped at all, what did help was modifying the circuit. 
+
+![Making the Sensor Copper](dance_visualization/media/makeSensor_01.jpeg)
+![Making the Sensor with Piezo Resistive Material](dance_visualization/media/makeSensor_03.jpeg)
+
+### The circuit 
+
+By changing the resistor from 1kOhms to 100Ohms, the saturation point of the analog read pins was significantly reduced. Instead of relatively light pressure saturating the sensor, full body weight had to be placed on the sensor before it saturated at 4095. 
+
+![The modified circuit](dance_visualization/media/circuit.jpg)
+
+### The protoboard 
+
+To attempt to make the device wireless, the tenuous connections of the breadboard had to be made more secure. Therefore, once the circuit was complete, a perfboard was used to solder the resistors in place and make the connections more robust. 
+
+TO DO: Add the video here 
+
+### Attempts at wireless data transfer 
+
+The first attempt to make the data transfer wireless was to use the Google Sheets API to send the data to a remote spreadsheet. While this worked, eventually, it was extremely slow. The data was only writing about every 0.5 seconds. This is likely due to the way that the array of data being sent was being created. Either way, it was far too slow to be useful for our purposes. 
+
+The next method was to try to use Open Sound Control to send the data wirelessly. We were able to get the Arduino sending a message and Processing receiving it, but it wasn't very clear how to send multiple data points and we eventually game up on the idea in favor of using a long cable to connect to the Barduino to allow for movement during the dance. 
+
+### Visualization - P5.js 
+
+We experimented with P5.js for visualization options. These included making a few circular visualizations and another one that acted more like a graph. ChatGPT was a helpful resource in coming up with the code for these visualizations. 
+
+This code can be found in the circlePressure folder. 
+
+TODO: Ask for images of these visualizations 
+
+### Visualization - Processing 
+
+Unfortunately, we were only able to get P5.js to read in a single sensor value. Because we were using code provided by Lina and Citlali, we struggled to understand how to actually read and use the data. Eventually Citlali suggested we switch to Processing and use some example code she had. Eventually we were able to get the Arduino to print multiple values to the Serial port and to get Processing to read in all those values and display them (with the help of ChatGPT to understand Citlali's code). 
+
+The Processing code can be found in the basicPressureVis folder. 
+
+We then started playing around with different colors, different visual representations, and different speeds. Because the window could only be a certain size, we had to reduce the speed at which the visualization expanded. We didn't want to send less data as this would reduce the resolution of the pressure we could measure. Instead we reduced the distance the visualization expanded every time. 
+
+![First visualization method](dance_visualization/media/rapper_step.png)
+![Later visualization method](dance_visualization/media/rapper_step_02.png)
 
 ## References 
-Some of the code can be found in the repository by Citlali Hernández and Lina Bautista for the course: [https://github.com/TURBULENTE/H-n-MI](https://github.com/TURBULENTE/H-n-MI) and some code from the Fabacademy course respositiory as well: [https://github.com/TURBULENTE/Fabricademy/tree/main](https://github.com/TURBULENTE/Fabricademy/tree/main). 
+
+- H-n-MI repository by Citlali Hernández and Lina Bautista: [https://github.com/TURBULENTE/H-n-MI](https://github.com/TURBULENTE/H-n-MI) 
+- Fabacademy respositiory by Citlali Hernández: [https://github.com/TURBULENTE/Fabricademy/tree/main](https://github.com/TURBULENTE/Fabricademy/tree/main). 
+- OSC repository by adrianfreed for Arduino: [https://github.com/CNMAT/OSC?tab=readme-ov-file](https://github.com/CNMAT/OSC?tab=readme-ov-file)
+- OSC repository by sojamo for Processing: [https://github.com/sojamo/oscp5/tree/master](https://github.com/sojamo/oscp5/tree/master)
