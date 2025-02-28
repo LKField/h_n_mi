@@ -50,14 +50,19 @@ void loop() {
   data[3] = RsensorValue_heel;
 //  Serial.println(data[3]);
 
-  Serial.println(data[0]);
+//  Serial.println(data[0]);
   
+
+
+  for (int i = 0; i < 4; i++) {
+    Serial.print(data[i]); 
+    Serial.print("\t");
+    delay(10);
+  }
+  Serial.println();
   delay(del_15fps);
-// for (int i = 0; i < 4; i = i + 1) {
-//       Serial.print(data[i]);
-//     }
-//     Serial.println();
 }
+
 
 // void loop() {
 //   // Measure and print the left foot sensors 
